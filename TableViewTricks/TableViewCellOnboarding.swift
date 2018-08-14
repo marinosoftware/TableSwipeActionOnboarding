@@ -48,28 +48,31 @@ class TableViewCellOnboarding: NSObject {
         var newViewXPos: CGFloat = onboardingCell.bounds.size.width
         var count: CGFloat = 0
 
-        let labelPadding: CGFloat = 10
+        let labelPadding: CGFloat = 12
         var editActionsWidth: CGFloat = 0
         for action in editActions.reversed() {
-            let view = UIView()
-            view.frame = CGRect(origin: CGPoint(x: newViewXPos, y: 0), size: onboardingCell.bounds.size)
-            view.backgroundColor = action.backgroundColor
             let label = UILabel(frame: .zero)
             label.text = action.title
-            label.font = UIFont(name: ".SFUIText-Medium", size: 15)
-            label.sizeToFit()
-            label.frame = CGRect(x: labelPadding, y: 0, width: label.frame.size.width + labelPadding, height: view.frame.size.height)
-            newViewXPos = view.frame.origin.x + labelPadding + label.frame.size.width
             label.textColor = .white
+            label.font = UIFont(name: ".SFUIText-Medium", size: 15)
+            label.textAlignment = .center
+            label.sizeToFit()
+
+            let view = UIView()
+            view.frame = CGRect(origin: CGPoint(x: newViewXPos, y: 0), size: CGSize(width: label.frame.size.width + (labelPadding * 2), height: onboardingCell.frame.size.height))
+            view.backgroundColor = action.backgroundColor
+
+            label.frame = view.bounds
+
+            newViewXPos = view.frame.origin.x + view.frame.size.width
+
             view.addSubview(label)
             actionViews.append(view)
             onboardingCell.addSubview(view)
 
             count += 1
-            editActionsWidth +=  labelPadding + label.frame.size.width
+            editActionsWidth +=  view.frame.size.width
         }
-
-        print(editActionsWidth)
 
         let onboardingFrame = self.onboardingCell!.frame
         UIView.animate(withDuration: 1.0, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
