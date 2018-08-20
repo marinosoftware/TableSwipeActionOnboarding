@@ -39,6 +39,17 @@ class TableViewCellOnboarding: NSObject {
         }
     }
 
+    func createLabel(with text: String?) -> UILabel {
+        let label = UILabel(frame: .zero)
+        label.text = text
+        label.textColor = .white
+        label.font = UIFont(name: ".SFUIText-Medium", size: 15)
+        label.textAlignment = .center
+        label.sizeToFit()
+
+        return label
+    }
+
     func discoverablilityAnimation() {
         guard let editActions = editActions,
               let onboardingCell = onboardingCell else {
@@ -53,12 +64,7 @@ class TableViewCellOnboarding: NSObject {
         let labelPadding: CGFloat = 12
         var editActionsWidth: CGFloat = 0
         for action in editActions.reversed() {
-            let label = UILabel(frame: .zero)
-            label.text = action.title
-            label.textColor = .white
-            label.font = UIFont(name: ".SFUIText-Medium", size: 15)
-            label.textAlignment = .center
-            label.sizeToFit()
+            let label = createLabel(with: action.title)
 
             let view = UIView()
             view.frame = CGRect(origin: CGPoint(x: newViewXPos, y: 0), size: CGSize(width: label.frame.size.width + (labelPadding * 2), height: onboardingCell.frame.size.height))
