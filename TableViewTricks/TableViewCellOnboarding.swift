@@ -18,11 +18,18 @@ class TableViewCellOnboarding: NSObject {
 
     static let userDefaultsFinishedKey = "onboardingFinished"
 
+    struct Config {
+        var initialDelay = 0.5
+    }
+
+    var animationConfig: Config
+
     var onboardingCell: UIView?
     var tableView: UITableView
 
-    init(with tableView: UITableView) {
+    init(with tableView: UITableView, config: Config = Config()) {
         self.tableView = tableView
+        self.animationConfig = config
         super.init()
 
         if self.tableView.numberOfRows(inSection: 0) > 0 {
@@ -89,7 +96,7 @@ class TableViewCellOnboarding: NSObject {
         self.onboardingCell?.frame = CGRect(x: 0, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
 
         // UIView delay doesn't work because snapshotView(afterScreenUpdates: true) was used before
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationConfig.initialDelay) {
             UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
 
                 self.onboardingCell?.frame = CGRect(x: -editActionsWidth, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
