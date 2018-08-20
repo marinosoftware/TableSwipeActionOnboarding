@@ -20,6 +20,8 @@ class TableViewCellOnboarding: NSObject {
 
     struct Config {
         var initialDelay = 0.5
+        var duration = 2.5
+        var halfwayDelay = 0.5
     }
 
     var animationConfig: Config
@@ -97,14 +99,18 @@ class TableViewCellOnboarding: NSObject {
 
         // UIView delay doesn't work because snapshotView(afterScreenUpdates: true) was used before
         DispatchQueue.main.asyncAfter(deadline: .now() + animationConfig.initialDelay) {
-            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
+            UIView.animate(withDuration: (self.animationConfig.duration - self.animationConfig.halfwayDelay) / 2.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
 
                 self.onboardingCell?.frame = CGRect(x: -editActionsWidth, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
             }) { (finished) in
 
                 if finished {
-                    UIView.animate(withDuration: 1.0, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
-
+                    UIView.animate(withDuration:  (self.animationConfig.duration - self.animationConfig.halfwayDelay) / 2.0,
+                                   delay: self.animationConfig.halfwayDelay,
+                                   usingSpringWithDamping: 1,
+                                   initialSpringVelocity: 1,
+                                   options: [.curveEaseInOut, .allowUserInteraction],
+                                   animations: {
                         self.onboardingCell?.frame = CGRect(x: 0, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
                     }) { (finished) in
 
