@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    var onboardingCell: TableViewCellOnboarding?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,12 +19,14 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    var onboardingCell: TableViewCellOnboarding?
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
-        onboardingCell = TableViewCellOnboarding(with: tableView)
-        onboardingCell?.editActions = tableView(tableView, editActionsForRowAt: IndexPath(row: 0, section: 0))
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if !UserDefaults.standard.bool(forKey: TableViewCellOnboarding.userDefaultsFinishedKey) {
+            onboardingCell = TableViewCellOnboarding(with: tableView)
+            onboardingCell?.editActions = tableView(tableView, editActionsForRowAt: IndexPath(row: 0, section: 0))
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,8 +50,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CustomTableViewCell
         cell.titleLabel.text = "test"
         cell.backgroundColor = .red
-
-        print(cell.titleLabel.font)
         return cell
     }
 
