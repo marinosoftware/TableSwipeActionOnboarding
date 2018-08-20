@@ -16,6 +16,8 @@ class TableViewCellOnboarding: NSObject {
         }
     }
 
+    static let userDefaultsFinishedKey = "onboardingFinished"
+
     var onboardingCell: UIView?
     var tableView: UITableView
 
@@ -98,6 +100,10 @@ class TableViewCellOnboarding: NSObject {
 
                         self.onboardingCell?.frame = CGRect(x: 0, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
                     }) { (finished) in
+
+                        if finished {
+                            UserDefaults.standard.setValue(true, forKey: TableViewCellOnboarding.userDefaultsFinishedKey)
+                        }
                         onboardingCell.removeFromSuperview()
                     }
                 } else {
