@@ -25,14 +25,16 @@ class TableViewCellOnboarding: NSObject {
 
         if self.tableView.numberOfRows(inSection: 0) > 0 {
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
-            if let screenShot = cell.snapshotView(afterScreenUpdates: false) {
+            if let screenShot = cell.snapshotView(afterScreenUpdates: true) {
                 screenShot.bounds = tableView.convert(cell.bounds, to: tableView)
                 onboardingCell = screenShot
 
-                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan))
-                onboardingCell!.addGestureRecognizer(panGesture)
-
                 tableView.addSubview(onboardingCell!)
+                tableView.bringSubview(toFront: onboardingCell!)
+
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+                tapGesture.numberOfTapsRequired = 1
+                onboardingCell!.addGestureRecognizer(tapGesture)
             }
         }
     }
@@ -88,11 +90,9 @@ class TableViewCellOnboarding: NSObject {
         }
     }
 
-    var previousPos: CGPoint?
-    @objc func pan(_ recogniser: UIPanGestureRecognizer) {
-//        previousPos = recogniser
-        print("Panning")
-        let translation = recogniser.translation(in: tableView)
-        onboardingCell!.transform = CGAffineTransform.init(translationX: translation.x, y: 0)
+    @objc func tap(_ recognizer: UITapGestureRecognizer) {
+        CATransaction.begin()
+        onboardingCell!.layer.removeAllAnimations()
+        CATransaction.commit()
     }
 }
