@@ -29,6 +29,8 @@ class TableViewCellOnboarding: NSObject {
     var onboardingCell: UIView?
     var tableView: UITableView
 
+    var rtl = false
+
     init(with tableView: UITableView, config: Config = Config()) {
         self.tableView = tableView
         self.animationConfig = config
@@ -36,6 +38,8 @@ class TableViewCellOnboarding: NSObject {
 
         if self.tableView.numberOfRows(inSection: 0) > 0 {
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
+            rtl = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+
             if let screenShot = cell.snapshotView(afterScreenUpdates: true) {
                 screenShot.frame = cell.frame
                 onboardingCell = screenShot
@@ -60,6 +64,22 @@ class TableViewCellOnboarding: NSObject {
         return label
     }
 
+    func nextViewXPos(from previousView: UIView? = nil) -> CGFloat {
+        guard let onboardingCell = onboardingCell else {
+            return 0
+        }
+
+        guard let previousView = previousView else {
+            return rtl ? 0 : onboardingCell.bounds.size.width
+        }
+
+        if rtl {
+            return previousView.frame.origin.x
+        } else {
+            return previousView.frame.origin.x + previousView.frame.size.width
+        }
+    }
+
     func discoverablilityAnimation() {
         guard let editActions = editActions,
               let onboardingCell = onboardingCell else {
@@ -68,7 +88,7 @@ class TableViewCellOnboarding: NSObject {
         }
 
         var actionViews = [UIView]()
-        var newViewXPos: CGFloat = onboardingCell.bounds.size.width
+        var newViewXPos: CGFloat = nextViewXPos()
         var count: CGFloat = 0
 
         let labelPadding: CGFloat = 12
@@ -77,12 +97,14 @@ class TableViewCellOnboarding: NSObject {
             let label = createLabel(with: action.title)
 
             let view = UIView()
-            view.frame = CGRect(origin: CGPoint(x: newViewXPos, y: 0), size: CGSize(width: label.frame.size.width + (labelPadding * 2), height: onboardingCell.frame.size.height))
+            let actionWidth = label.frame.size.width + (labelPadding * 2)
+            let actionX = rtl ? newViewXPos - actionWidth : newViewXPos
+            view.frame = CGRect(origin: CGPoint(x: actionX, y: 0), size: CGSize(width: actionWidth, height: onboardingCell.frame.size.height))
             view.backgroundColor = action.backgroundColor
 
             label.frame = view.bounds
 
-            newViewXPos = view.frame.origin.x + view.frame.size.width
+            newViewXPos = nextViewXPos(from: view)
 
             view.addSubview(label)
             actionViews.append(view)
@@ -96,7 +118,8 @@ class TableViewCellOnboarding: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + animationConfig.initialDelay) {
             UIView.animate(withDuration: (self.animationConfig.duration - self.animationConfig.halfwayDelay) / 2.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
 
-                self.onboardingCell?.transform = CGAffineTransform(translationX: -editActionsWidth, y: 0)
+                let rtlModifier: CGFloat = self.rtl ? 1 : -1
+                self.onboardingCell?.transform = CGAffineTransform(translationX: editActionsWidth * rtlModifier, y: 0)
             }) { (finished) in
 
                 if finished {
