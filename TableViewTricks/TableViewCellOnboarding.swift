@@ -37,11 +37,10 @@ class TableViewCellOnboarding: NSObject {
         if self.tableView.numberOfRows(inSection: 0) > 0 {
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
             if let screenShot = cell.snapshotView(afterScreenUpdates: true) {
-                screenShot.bounds = tableView.convert(cell.bounds, to: tableView)
+                screenShot.frame = cell.frame
                 onboardingCell = screenShot
 
                 tableView.addSubview(onboardingCell!)
-                tableView.bringSubview(toFront: onboardingCell!)
 
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
                 tapGesture.numberOfTapsRequired = 1
@@ -95,13 +94,11 @@ class TableViewCellOnboarding: NSObject {
 
         let onboardingFrame = self.onboardingCell!.frame
 
-        self.onboardingCell?.frame = CGRect(x: 0, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
-
         // UIView delay doesn't work because snapshotView(afterScreenUpdates: true) was used before
         DispatchQueue.main.asyncAfter(deadline: .now() + animationConfig.initialDelay) {
             UIView.animate(withDuration: (self.animationConfig.duration - self.animationConfig.halfwayDelay) / 2.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.curveEaseInOut, .allowUserInteraction], animations: {
 
-                self.onboardingCell?.frame = CGRect(x: -editActionsWidth, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
+                self.onboardingCell?.frame = CGRect(origin: CGPoint(x: -editActionsWidth, y: onboardingFrame.origin.y), size: onboardingFrame.size)
             }) { (finished) in
 
                 if finished {
@@ -111,7 +108,7 @@ class TableViewCellOnboarding: NSObject {
                                    initialSpringVelocity: 1,
                                    options: [.curveEaseInOut, .allowUserInteraction],
                                    animations: {
-                        self.onboardingCell?.frame = CGRect(x: 0, y: 0, width: onboardingFrame.size.width, height: onboardingFrame.size.height)
+                        self.onboardingCell?.frame = onboardingFrame
                     }) { (finished) in
 
                         if finished {
