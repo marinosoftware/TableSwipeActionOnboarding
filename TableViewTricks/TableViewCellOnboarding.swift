@@ -40,17 +40,27 @@ class TableViewCellOnboarding: NSObject {
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
             rtl = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
 
-            if let screenShot = cell.snapshotView(afterScreenUpdates: true) {
-                screenShot.frame = cell.frame
-                onboardingCell = screenShot
+            onboardingCell = customSnapShotFrom(view: cell)
+            onboardingCell?.frame = cell.frame
 
-                tableView.addSubview(onboardingCell!)
+            tableView.addSubview(onboardingCell!)
 
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
-                tapGesture.numberOfTapsRequired = 1
-                onboardingCell!.addGestureRecognizer(tapGesture)
-            }
+            // So a user can cut the animation short
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+            tapGesture.numberOfTapsRequired = 1
+            onboardingCell!.addGestureRecognizer(tapGesture)
         }
+    }
+
+    func customSnapShotFrom(view:UIView) -> UIView {
+
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0)
+        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let cellImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        let imageView = UIImageView(image: cellImage)
+        return imageView
     }
 
     func createLabel(with text: String?) -> UILabel {
