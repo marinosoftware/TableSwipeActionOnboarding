@@ -12,19 +12,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var onboardingCell: TableViewCellOnboarding?
 
+    let animals = ["A": ["Anaconda"], "B": ["Bear", "Beaver"], "C": ["Cat", "Camel"], "D": ["Dingo"], "E": ["Elephant"]]
+    let indices = ["A", "B", "C", "D", "E"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
         tableView.delegate = self
         tableView.dataSource = self
+
+        UserDefaults.standard.set(false, forKey: TableViewCellOnboarding.userDefaultsFinishedKey)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         if !UserDefaults.standard.bool(forKey: TableViewCellOnboarding.userDefaultsFinishedKey) {
-            onboardingCell = TableViewCellOnboarding(with: tableView)
+            let config = TableViewCellOnboarding.Config(initialDelay: 1, duration: 2.5, halfwayDelay: 0.5)
+            onboardingCell = TableViewCellOnboarding(with: tableView, config: config)
             onboardingCell?.editActions = tableView(tableView, editActionsForRowAt: IndexPath(row: 0, section: 0))
         }
     }
@@ -39,16 +45,20 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return indices.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return animals[indices[section]]?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CustomTableViewCell
-        cell.titleLabel.text = "test"
+
+        let section = indices[indexPath.section]
+        let item = animals[section]?[indexPath.row] ?? ""
+
+        cell.titleLabel.text = item
         cell.backgroundColor = .red
         return cell
     }
@@ -63,5 +73,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
         return [delete, amend]
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return indices[section]
     }
 }
