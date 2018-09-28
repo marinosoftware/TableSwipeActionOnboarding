@@ -41,9 +41,9 @@ class TableViewCellOnboarding: NSObject {
             rtl = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
 
             onboardingCell = customSnapShotFrom(view: cell)
-            onboardingCell?.frame = cell.frame
+            onboardingCell?.frame = cell.bounds
 
-            tableView.addSubview(onboardingCell!)
+            cell.addSubview(onboardingCell!)
 
             // So a user can cut the animation short
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
