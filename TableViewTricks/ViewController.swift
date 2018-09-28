@@ -59,7 +59,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let item = animals[section]?[indexPath.row] ?? ""
 
         cell.titleLabel.text = item
-        cell.backgroundColor = .red
         return cell
     }
 
@@ -77,5 +76,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return indices[section]
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 126
     }
 }

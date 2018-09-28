@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,28 +18,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZSY-VJ-X5Z">
-                                <rect key="frame" x="67" y="379" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZSY-VJ-X5Z">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="63" id="GoO-gJ-eWF" customClass="CustomTableViewCell" customModule="TableViewTricks" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="240" height="63"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="126" id="GoO-gJ-eWF" customClass="CustomTableViewCell" customModule="TableViewTricks" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="126"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GoO-gJ-eWF" id="TPT-Ge-wov">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="62.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="125.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Lu-SD-0fs">
-                                                    <rect key="frame" x="98.5" y="21" width="43" height="21"/>
+                                                    <rect key="frame" x="108" y="11" width="251" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="animal" translatesAutoresizingMaskIntoConstraints="NO" id="Ax4-TR-L6f">
+                                                    <rect key="frame" x="15" y="11" width="85" height="105"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="85" id="0s9-cg-vlk"/>
+                                                        <constraint firstAttribute="height" constant="105" id="1XD-j7-2sJ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This would be a description of the animal. Lorem ipsum filler text is not cool anymore." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNF-QN-hUL">
+                                                    <rect key="frame" x="108" y="40" width="252" height="61"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="9Lu-SD-0fs" firstAttribute="centerY" secondItem="TPT-Ge-wov" secondAttribute="centerY" id="9q2-np-gMz"/>
-                                                <constraint firstItem="9Lu-SD-0fs" firstAttribute="centerX" secondItem="TPT-Ge-wov" secondAttribute="centerX" id="yvH-Ny-Jp6"/>
+                                                <constraint firstItem="FNF-QN-hUL" firstAttribute="top" secondItem="9Lu-SD-0fs" secondAttribute="bottom" constant="8" id="1mg-Kq-5pN"/>
+                                                <constraint firstItem="Ax4-TR-L6f" firstAttribute="top" secondItem="TPT-Ge-wov" secondAttribute="top" constant="11" id="9B4-Ni-UU9"/>
+                                                <constraint firstItem="FNF-QN-hUL" firstAttribute="leading" secondItem="Ax4-TR-L6f" secondAttribute="trailing" constant="8" id="RNF-dq-oJJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="9Lu-SD-0fs" secondAttribute="trailing" constant="16" id="dEI-w9-BEW"/>
+                                                <constraint firstItem="Ax4-TR-L6f" firstAttribute="leading" secondItem="TPT-Ge-wov" secondAttribute="leading" constant="15" id="glR-Tr-bkh"/>
+                                                <constraint firstItem="9Lu-SD-0fs" firstAttribute="top" secondItem="TPT-Ge-wov" secondAttribute="top" constant="11" id="gyD-27-j5M"/>
+                                                <constraint firstItem="9Lu-SD-0fs" firstAttribute="leading" secondItem="Ax4-TR-L6f" secondAttribute="trailing" constant="8" id="i6U-8b-WA2"/>
+                                                <constraint firstAttribute="trailing" secondItem="FNF-QN-hUL" secondAttribute="trailing" constant="15" id="vqH-FG-IkB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -50,6 +68,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZSY-VJ-X5Z" secondAttribute="bottom" id="n41-3K-kSf"/>
+                            <constraint firstItem="ZSY-VJ-X5Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nCA-l7-eGK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZSY-VJ-X5Z" secondAttribute="trailing" id="taT-fA-gig"/>
+                            <constraint firstItem="ZSY-VJ-X5Z" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="yeo-BD-GC9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
@@ -61,4 +85,7 @@
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="animal" width="85" height="105"/>
+    </resources>
 </document>
