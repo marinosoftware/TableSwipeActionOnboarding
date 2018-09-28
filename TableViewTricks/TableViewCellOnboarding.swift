@@ -40,8 +40,9 @@ class TableViewCellOnboarding: NSObject {
             let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))!
             rtl = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
 
-            onboardingCell = customSnapShotFrom(view: cell)
-            onboardingCell?.frame = cell.bounds
+            let snapshot = customSnapShotFrom(view: cell)
+            onboardingCell = UIView(frame: cell.bounds)
+            onboardingCell?.addSubview(snapshot)
 
             cell.addSubview(onboardingCell!)
 
@@ -113,16 +114,20 @@ class TableViewCellOnboarding: NSObject {
             view.backgroundColor = action.backgroundColor
 
             label.frame = view.bounds
+            label.isUserInteractionEnabled = false
 
             newViewXPos = nextViewXPos(from: view)
 
             view.addSubview(label)
+            view.isUserInteractionEnabled = false
             actionViews.append(view)
             onboardingCell.addSubview(view)
 
             count += 1
             editActionsWidth +=  view.frame.size.width
         }
+
+        onboardingCell.frame = CGRect(origin: onboardingCell.frame.origin, size: CGSize(width: onboardingCell.frame.size.width + editActionsWidth, height: onboardingCell.frame.size.height))
 
         // UIView delay doesn't work because snapshotView(afterScreenUpdates: true) was used before
         DispatchQueue.main.asyncAfter(deadline: .now() + animationConfig.initialDelay) {
@@ -146,9 +151,11 @@ class TableViewCellOnboarding: NSObject {
                             UserDefaults.standard.setValue(true, forKey: TableViewCellOnboarding.userDefaultsFinishedKey)
                         }
                         onboardingCell.removeFromSuperview()
+                        self.onboardingCell?.transform = CGAffineTransform.identity
                     }
                 } else {
                     onboardingCell.removeFromSuperview()
+                    self.onboardingCell?.transform = CGAffineTransform.identity
                 }
             }
         }
