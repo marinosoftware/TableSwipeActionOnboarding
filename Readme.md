@@ -1,7 +1,7 @@
 # UITableViewCell onboarding animation
 Animating a `UITableViewCell` to show the `editActions` isn't as straightforward as you would think. I couldn't find any public APIs to do this programatically (If you found them, please let me know). So I created a custom animation, to help users in the onboarding process.
 
-<img src="https://i.imgur.com/xIEFhZ2.gif" alt="UITableViewCellAnimation" width="180"/>
+<img src="example.gif" alt="UITableViewCell swipe action example" width="150" />
 
 ## How to implement
 
